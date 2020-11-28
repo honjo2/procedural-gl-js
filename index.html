@@ -25,11 +25,11 @@
         // Define API Keys (replace these with your own!)
         const NASADEM_APIKEY = null;
         const MAPTILER_APIKEY = null;
-        if ( !NASADEM_APIKEY || !MAPTILER_APIKEY ) {
-          const error = Error( 'Modify index.html to include API keys' );
-          container.innerHTML = error; 
-          throw error;
-        }
+        // if ( !NASADEM_APIKEY || !MAPTILER_APIKEY ) {
+        //   const error = Error( 'Modify index.html to include API keys' );
+        //   container.innerHTML = error; 
+        //   throw error;
+        // }
 
         const datasource = {
           elevation: {
@@ -37,8 +37,8 @@
           },
           imagery: {
             apiKey: MAPTILER_APIKEY,
-            urlFormat: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key={apiKey}',
-            attribution: '<a href="https://www.maptiler.com/copyright/">Maptiler</a> <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            urlFormat: 'https://maps.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg',
+            attribution: '国土地理院'
           }
         }
         Procedural.init( { container, datasource } );
@@ -48,9 +48,8 @@
         Procedural.setRotationControlVisible( true );
         Procedural.setZoomControlVisible( true );
 
-        // Load random location
-        const latitude = 42 + 8 * Math.random();
-        const longitude = 6 + 8 * Math.random();
+        const latitude = 35.48506;
+        const longitude = 138.23027;
         Procedural.displayLocation( {
           latitude:latitude, longitude:longitude
         } );

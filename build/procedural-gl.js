@@ -34276,7 +34276,7 @@
 	}
 
 	const ELEVATION_POOL_SIZE = elevationPoolSize;
-	const ELEVATION_TILE_SIZE = 512;
+	const ELEVATION_TILE_SIZE = 256;
 	const IMAGERY_POOL_SIZE = imageryPoolSize;
 	const IMAGERY_TILE_SIZE = 256;
 	const INTERPOLATE_FLOAT = params.has( 'interpolateFloat' );
@@ -34412,21 +34412,19 @@
 
 	    let data = new Float32Array( N );
 
-	    const baseVal = -32768;
+	    // const baseVal = -32768;
 	    //const interval = 1 / 256;
 	    let dataView = new DataView( imgData.buffer );
-	    for ( let i = 0; i < N; ++i ) {
-	      //let h = interval * (
-	      //  256 * 256 * imgData[ 4 * i ] +
-	      //  256 * imgData[ 4 * i + 1 ] +
-	      //  imgData[ 4 * i + 2 ]
-	      //) + baseVal;
-	      // Read as big-endian data (skipping B channel), equivalent to above
-	      let H = dataView.getUint16( 4 * i, false ) + baseVal;
+	    const baseVal = -1000;
+      const interval = 0.1;
+			for ( let i = 0; i < N; ++i ) {
+				let H = baseVal + (((dataView.getUint8( 4 * i, false ) * 256 * 256) + (dataView.getUint8( 4 * i + 1, false ) * 256) + dataView.getUint8( 4 * i + 2, false )) * interval);
+
+				if (i === 0) console.log('first:', H); // 1601
 
 	      // Handle NODATA value, clamping to 0
 	      data[ i ] = ( H === baseVal ? 0 : H );
-	    }
+			}
 
 	    // Do we need float? Perhaps just converting to data is
 	    // enough?
@@ -34730,7 +34728,7 @@
 	 */
 
 	const ElevationDatasource = new BaseDatasource( {
-	  urlFormat: 'https://www.nasadem.xyz/api/v1/dem/{z}/{x}/{y}.png?key={apiKey}',
+		urlFormat: 'https://vt-cm01.mapion.co.jp/gl-server/proxy/{z}/{x}/{y}.png?pathPattern=deep&format=m-tech/mapion/!prefix!-terrain-rgb-v20200910/&access_token=mt-pk.eyJ1IjoibWFwaW9uIiwiYSI6InJ5ZXFiOWJyZ3J2MjV3ZDcyNXY3Z3dmYzYifQ.XoOA7fe-5nUi8ALSyCl277',
 	  textureSize: ELEVATION_TILE_SIZE,
 	  poolSize: ELEVATION_POOL_SIZE,
 	  useFloat: true
@@ -34765,7 +34763,10 @@
 	}
 
 	function dataToHeight( data ) {
-	  return 256 * data[ 0 ] + data[ 1 ] - 32768;
+		const baseval = -1000;
+		const interval = 0.1;
+		const ret = baseval + (((data[0] * 256 * 256) + (data[1] * 256) + data[2]) * interval);
+		return ret;
 	}
 
 	// Simplified height lookup, doesn't interpolate between points

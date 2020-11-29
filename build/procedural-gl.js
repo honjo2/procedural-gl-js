@@ -42781,7 +42781,8 @@ void main(){vec2 z=gl_FragCoord.xy*STEP;vec3 o=2.0*vec3(z-0.5,0.0);float A=min(0
 	};
 	const pStyle = { color: 'white', fontSize : '6pt', margin: 0 };
 	const BASE_CREDIT = [
-	  '&copy;<a href="https://www.nasadem.xyz">nasadem.XYZ</a>'
+		// '&copy;<a href="https://www.nasadem.xyz">nasadem.XYZ</a>'
+		'&copy; ONECOMPATH'
 	];
 
 	const Credits = React.createClass( {displayName: 'Credits',
@@ -42807,7 +42808,7 @@ void main(){vec2 z=gl_FragCoord.xy*STEP;vec3 o=2.0*vec3(z-0.5,0.0);float A=min(0
 
 	    return (
 	      React.createElement('div', { className: "credits", style: style$1,}
-	        , React.createElement('p', { style: pStyle,}, "Data: " ,  credits.map( credit =>
+	        , React.createElement('p', { style: pStyle,}, "" ,  credits.map( credit =>
 	          React.createElement(React.Fragment, null
 	            , React.createElement('span', { dangerouslySetInnerHTML: { __html: credit },})
 	            , React.createElement('span', null, " " )

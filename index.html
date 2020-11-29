@@ -49,10 +49,41 @@
         Procedural.setRotationControlVisible( true );
         Procedural.setZoomControlVisible( true );
 
-        const latitude = 35.48506;
-        const longitude = 138.23027;
+        // const latitude = 35.48506;
+        // const longitude = 138.23027;
+        // 八ヶ岳
+        // const latitude = 35.97092622052276;
+        // const longitude = 138.36974793617657;
+        // 北岳
+        const latitude = 35.67666878676361;
+        const longitude = 138.23521573711287;
         Procedural.displayLocation( {
           latitude:latitude, longitude:longitude
         } );
+
+        var featureCollection = {
+        'name': 'example',
+        'type': 'FeatureCollection',
+        'features': [
+          {
+            'id': 0,
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [ 138.23521573711287, 35.67666878676361 ]
+            },
+            'properties': {
+              'name': '北岳',
+              'borderRadius': 23,
+              'padding': 5,
+              'fontSize': 13,
+              'background': '#44b6f7',
+              'anchor': 'center'
+            }
+          }
+        ]
+      }
+
+      Procedural.addOverlay( featureCollection );
     </script>
 </html>

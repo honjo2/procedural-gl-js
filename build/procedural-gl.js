@@ -34415,15 +34415,9 @@
 	    // const baseVal = -32768;
 	    //const interval = 1 / 256;
 	    let dataView = new DataView( imgData.buffer );
-	    const baseVal = -1000;
-      const interval = 0.1;
 			for ( let i = 0; i < N; ++i ) {
-				let H = baseVal + (((dataView.getUint8( 4 * i, false ) * 256 * 256) + (dataView.getUint8( 4 * i + 1, false ) * 256) + dataView.getUint8( 4 * i + 2, false )) * interval);
-
-				if (i === 0) console.log('first:', H); // 1601
-
-	      // Handle NODATA value, clamping to 0
-	      data[ i ] = ( H === baseVal ? 0 : H );
+				let d = [dataView.getUint8( 4 * i, false ), dataView.getUint8( 4 * i + 1, false ), dataView.getUint8( 4 * i + 2, false )];
+				data[ i ] = dataToHeight(d);
 			}
 
 	    // Do we need float? Perhaps just converting to data is
